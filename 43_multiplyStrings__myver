@@ -1,0 +1,60 @@
+/*知识点：初始化字符串可以使用：string mystr(n,'0')*/
+class Solution {
+private:string mutiplyInner(string up, char low, int digit)
+{
+	int size = up.size();
+	string ret(size, '0');
+	int temp = (int)(low - '0');
+	int cf = 0;
+	int product = 0;
+	for (int i = size - 1; i>-1; i--)
+	{
+		product = temp * (int)(up[i] - '0') + cf;
+		cf = product / 10;
+		//这里强制转换ma?
+		ret[i] = (product % 10) + '0';
+	}
+	if (cf>0)
+	{
+		ret = "0" + ret;
+		ret[0] = cf + '0';
+	}
+	if (digit>0) { string zeros(digit, '0'); ret = ret + zeros; }
+	return ret;
+}
+private:void add(string &res, string temp)
+{
+	int rlen = res.size();
+	int tlen = temp.size();
+	int len = rlen>tlen ? tlen : rlen;
+	if (rlen<tlen)
+	{
+		string mytemp(tlen - rlen, '0');
+		res = mytemp + res;
+		rlen = tlen;
+		len = tlen;
+	}
+	int sum = 0;
+	int cf = 0;
+	for (int i = 1; i <= len; i++)
+	{
+		sum = (int)(res[rlen - i]-'0') + (int)(temp[tlen - i]-'0') + cf;
+		res[rlen - i] = (sum % 10) + '0';
+		cf = sum / 10;
+	}
+	if (cf>0)res = "1" + res;
+}
+public:
+	string multiply(string num1, string num2) {
+        if(num1=="0"||num2=="0")return "0";
+		int size = num2.size();
+		string res = "0";
+		for (int i = 1; i <= size; i++)
+		{
+			string temp = mutiplyInner(num1, num2[size - i], i - 1);
+			add(res, temp);
+		}
+		return res;
+
+	}
+};
