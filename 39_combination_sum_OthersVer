@@ -1,0 +1,27 @@
+class Solution {
+private:
+    void back(vector<int>&candidates,vector<vector<int>>&ret,vector<int>item,int target,int begin)
+    {
+        if(!target)
+        {
+            ret.push_back(item);
+            return;
+        }
+        for(;begin!=candidates.size()&&candidates[begin]<=target;begin++)
+        {
+            item.push_back(candidates[begin]);
+            back(candidates,ret,item,target-candidates[begin],begin);
+            item.pop_back();
+        }
+    }
+    
+public:
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        sort(candidates.begin(),candidates.end());
+        vector<vector<int>>ret;
+        vector<int>item;
+        back(candidates,ret,item,target,0);
+        return ret;
+        
+    }
+};
