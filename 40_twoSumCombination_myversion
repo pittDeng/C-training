@@ -1,0 +1,30 @@
+class Solution {
+private:
+    void back(vector<int>&candidates,vector<int>&item,vector<vector<int>>&res,int target,int begin)
+    //请注意这里的item用地址形式的，可以减小在函数传递中，再新建vector<int>的开销，只要可以确定，
+    //这个程序同一时间只用到一个item可以这样写
+    {
+        if(target<0)return;
+        if(!target)
+        {
+            res.push_back(item);
+            return;
+        }
+        for(;begin<candidates.size();begin++)
+        {
+            item.push_back(candidates[begin]);
+            back(candidates,item,res,target-candidates[begin],begin+1);
+            item.pop_back();
+            while(begin<candidates.size()-1&&candidates[begin+1]==candidates[begin])begin++;
+        }
+    }
+public:
+    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+        vector<vector<int>>res;
+        vector<int>item;
+        sort(candidates.begin(),candidates.end());
+        back(candidates,item,res,target,0);
+        return res;
+        
+    }
+};
