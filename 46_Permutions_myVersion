@@ -1,0 +1,31 @@
+/*这里主要要知道vector容器的insert函数效率低*/
+
+class Solution {
+private:void innerFunc(vector<int>&choice,vector<int>&item,vector<vector<int>>&res)
+{
+    int size=choice.size();
+    if(size==0)
+    {
+        res.push_back(item);
+        return;
+    }
+    int temp=0;
+    for(int i=0;i<size;i++)
+    {
+        temp=choice[i];
+        choice.erase(choice.begin()+i);
+        item.push_back(temp);
+        innerFunc(choice,item,res);
+        item.pop_back();
+        choice.insert(choice.begin()+i,temp);
+        
+    }
+}
+public:
+    vector<vector<int>> permute(vector<int>& nums) {
+        vector<vector<int>>res;
+        vector<int>item;
+        innerFunc(nums,item,res);
+        return res;
+    }
+};
