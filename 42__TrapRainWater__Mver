@@ -1,0 +1,29 @@
+
+//对于每一个都找到它左右最大的，暴力方法
+class Solution {
+public:
+    int trap(vector<int>& height) {
+        int size=height.size();
+        vector<int>water(height);
+        int left;
+        int right;
+        int max;
+        for(int i=0;i<size;i++)
+        {
+            left=height[i];
+            right=height[i];
+            int k=i+1;
+            int j=i-1;
+            for(;j>-1;j--)left=height[j]>left?height[j]:left;
+            for(;k<size;k++)right=height[k]>right?height[k]:right;
+            max=left>right?right:left;
+            if(max>height[i])water[i]=max;
+        }
+        int sum=0;
+        for(int i=0;i<size;i++)
+        {
+            sum+=water[i]-height[i];
+        }
+        return sum;
+    }
+};
