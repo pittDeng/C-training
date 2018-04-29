@@ -1,0 +1,45 @@
+class Solution {
+public:
+    vector<int> spiralOrder(vector<vector<int>>& matrix) {
+        vector<int>temp;
+        int rownum=matrix.size();
+        if(rownum==0)return temp;
+        int colnum=matrix[0].size();
+        int totalnum=rownum*colnum;
+        vector<int> res(totalnum);
+        int k=0;
+        int ibegin=0;
+        int jbegin=0;
+        while(true)
+        {
+            if(ibegin>=rownum||jbegin>=colnum)break;
+            for(int j=jbegin;j<colnum;j++)//上面的一行
+            {
+                res[k]=matrix[ibegin][j];
+                k++;
+            }
+            for(int i=ibegin+1;i<rownum;i++)//最右面的一行
+            {
+                res[k]=matrix[i][colnum-1];
+                k++;
+            }
+            for(int j=colnum-2;j>=jbegin&&rownum-ibegin>1;j--)//最下面的一行
+            {
+                res[k]=matrix[rownum-1][j];
+                k++;
+            }
+            for(int i=rownum-2;i>ibegin&&colnum-jbegin>1;i--)//最左边的一行
+            {
+                res[k]=matrix[i][jbegin];
+                k++;
+            }
+            ibegin++;
+            jbegin++;
+            rownum--;
+            colnum--;
+        }
+        return res;
+        
+        
+    }
+};
