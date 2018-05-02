@@ -1,0 +1,34 @@
+
+//这种方法采用二维数组，在二维平面上计算，还有一种方法仅采用一维数组，速度更快，占用空间更小
+class Solution {
+public:
+    int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {
+        int row=obstacleGrid.size();
+        if(row<1)return 0;
+        int col=obstacleGrid[0].size();
+        if(obstacleGrid[row-1][col-1]==1)return 0;
+        vector<vector<int>>map(row,vector<int>(col,1));
+        for(int i=row-1;i>=0;i--)
+        {
+            if(obstacleGrid[i][col-1]==1){map[i][col-1]=0;
+                                          for(;i>=0;i--)map[i][col-1]=0;
+                                          break;
+                                         }
+        }
+        for(int j=col-1;j>=0;j--)
+        {
+            if(obstacleGrid[row-1][j]==1){map[row-1][j]=0;
+                                          for(;j>=0;j--)map[row-1][j]=0;
+                                          break;
+                                         }
+        }
+        for(int i=row-2;i>=0;i--)
+            for(int j=col-2;j>=0;j--)
+            {
+                if(obstacleGrid[i][j]==1)map[i][j]=0;
+                else map[i][j]=map[i+1][j]+map[i][j+1];
+            }
+        return map[0][0];
+        
+    }
+};
