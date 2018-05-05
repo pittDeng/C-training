@@ -1,0 +1,20 @@
+//Myversion
+class Solution {
+private:
+    void go(int n,int cur,int k,int num,vector<int>&item,vector<vector<int>>&ans)
+    {
+        if(k==num){ans.push_back(item);return;}
+        if(n<cur)return;
+        item.push_back(cur);
+        go(n,cur+1,k,num+1,item,ans);
+        item.pop_back();
+        go(n,cur+1,k,num,item,ans);
+    }
+public:
+    vector<vector<int>> combine(int n, int k) {
+        vector<vector<int>>ans;
+        vector<int>item;
+        go(n,1,k,0,item,ans);
+        return ans;
+    }
+};
